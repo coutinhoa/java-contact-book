@@ -24,10 +24,14 @@ public class Main {
                     System.out.println(e.getMessage());
                 }
             } else if (command.equals("LC")) {
-                Iterator<Contact> iterator = book.getContacts();
-                while (iterator.hasNext()) {
-                    Contact current = iterator.next();
-                    System.out.println(current.getName()+";"+current.getPhoneNumber()+";"+current.getEmail());
+                try {
+                    Iterator<Contact> iterator = book.getContacts();
+                    while (iterator.hasNext()) {
+                        Contact current = iterator.next();
+                        System.out.println(current.getName() + ";" + current.getPhoneNumber() + ";" + current.getEmail());
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
             }else if(command.equals("RC")){
                 String nameRemoved = scanner.nextLine();
@@ -61,7 +65,7 @@ public class Main {
                     System.out.println("Contact updated");}
                 catch (Exception e) {
                     System.out.println(e.getMessage());}
-            }else if(command.equals("SP")){
+            }else if(command.equals("SE")){
                 String name = scanner.nextLine();
                 String newEmail = scanner.nextLine();
                 try {
@@ -69,6 +73,12 @@ public class Main {
                     System.out.println("Contact updated");}
                 catch (Exception e) {
                     System.out.println(e.getMessage());}
+            } else if (command.equals("EP")) {
+                if(book.equalPhoneNumbers()){
+                    System.out.println("There are contacts that share phone numbers.");
+                }else{
+                    System.out.println("All contacts have different phone numbers.");
+                }
             }
         }
     }

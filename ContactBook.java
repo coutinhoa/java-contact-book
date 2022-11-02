@@ -26,31 +26,41 @@ public class ContactBook {
         return contacts.iterator();
     }
 
-    public void removeContact(String name) throws Exception{
+    public Contact getContactByName(String name){
         for(Contact element : contacts) {
             if (element.getName().equals(name)) {
-                contacts.remove(element);
-                throw new Exception("Contact removed.");
+                return element;
             }
         }
-        throw new Exception("Contact doesn't exist.");
+        return null;
+    }
+
+    public void removeContact(String name) throws Exception{
+        Contact contact = getContactByName(name);
+
+        if (contact == null) {
+            throw new Exception("Contact doesn't exist.");
+        } else {
+            contacts.remove(contact);
+            throw new Exception("Contact removed.");
+        }
     }
 
     public int getPhone(String name) throws Exception{
-        for(Contact element : contacts) {
-            if (element.getName().equals(name)) {
-                return element.getPhoneNumber();
-            }
+        Contact contact = getContactByName(name);
+        if (contact == null) {
+            throw new Exception("Contact doesn't exist.");
+        } else {
+            return contact.getPhoneNumber();
         }
-        throw new Exception("Contact doesn't exist.");
     }
     public String getMail(String name) throws Exception{
-        for(Contact element : contacts) {
-            if (element.getName().equals(name)) {
-                return element.getEmail();
-            }
+        Contact contact = getContactByName(name);
+        if (contact == null) {
+            throw new Exception("Contact doesn't exist.");
+        } else {
+            return contact.getEmail();
         }
-        throw new Exception("Contact doesn't exist.");
     }
 
     public String lookNameByPhone(int phoneNumber) throws Exception{
@@ -61,23 +71,33 @@ public class ContactBook {
         }
         throw new Exception("Phone number does not exist.");
     }
-
-    public void updatePhone(String name, int newNumber) throws Exception{
-        for(Contact element : contacts) {
-            if (element.getName().equals(name)) {
-                element.updatePhoneNumber(newNumber);
-            }
+    public void updatePhone(String name, int newNumber) throws Exception {
+        Contact contact = getContactByName(name);
+        if (contact == null) {
+            throw new Exception("Contact doesn't exist.");
+        } else {
+            contact.updatePhoneNumber(newNumber);
         }
-        throw new Exception("Contact doesn't exist.");
     }
 
     public void updateEmail(String name, String newEmail) throws Exception{
-        for(Contact element : contacts) {
-            if (element.getName().equals(name)) {
-                element.updateEmail(newEmail);
+        Contact contact = getContactByName(name);
+        if (contact == null) {
+            throw new Exception("Contact doesn't exist.");
+        } else {
+            contact.updateEmail(newEmail);
+        }
+    }
+
+    public boolean equalPhoneNumbers() throws Exception{
+        for (int i = 0; i < contacts.size(); i++) {
+            for (int j = i + 1 ; j < contacts.size(); j++) {
+                if (contacts.get(i).getPhoneNumber() == contacts.get(j).getPhoneNumber()) {
+                    return true;
+                }
             }
         }
-        throw new Exception("Contact doesn't exist.");
+        return false;
     }
 
 }
