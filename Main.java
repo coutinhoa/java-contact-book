@@ -14,8 +14,7 @@ public class Main {
                 return;
             } else if (command.equals("AC")) {
                 String name = scanner.nextLine();
-                int phoneNumber = scanner.nextInt();
-                scanner.nextLine();
+                String phoneNumber = scanner.nextLine();
                 String email = scanner.nextLine();
                 try{
                     book.addContact(name, phoneNumber, email);
@@ -28,6 +27,7 @@ public class Main {
                     Iterator<Contact> iterator = book.getContacts();
                     while (iterator.hasNext()) {
                         Contact current = iterator.next();
+                        System.out.println("Registered people:");
                         System.out.println(current.getName() + ";" + current.getPhoneNumber() + ";" + current.getEmail());
                     }
                 } catch (Exception e) {
@@ -59,7 +59,7 @@ public class Main {
                     System.out.println(e.getMessage());}
             }else if(command.equals("SP")){
                 String name = scanner.nextLine();
-                int newPhone = scanner.nextInt();
+                String newPhone = scanner.nextLine();
                 try {
                     book.updatePhone(name, newPhone);
                     System.out.println("Contact updated");}

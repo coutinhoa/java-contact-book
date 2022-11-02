@@ -7,7 +7,7 @@ public class ContactBook {
     public ContactBook() {
         contacts=new ArrayList<Contact>();
     }
-    public void addContact(String name, Integer phoneNumber, String email) throws Exception{
+    public void addContact(String name, String phoneNumber, String email) throws Exception{
         Contact contact = new Contact(name, phoneNumber, email);
 
         for(Contact element : contacts) {
@@ -15,6 +15,8 @@ public class ContactBook {
                 throw new Exception("Contact already exists.");
             }
         }
+
+        onlyDigits(phoneNumber);
 
         contacts.add(contact);
         contacts.size();
@@ -46,7 +48,7 @@ public class ContactBook {
         }
     }
 
-    public int getPhone(String name) throws Exception{
+    public String getPhone(String name) throws Exception{
         Contact contact = getContactByName(name);
         if (contact == null) {
             throw new Exception("Contact doesn't exist.");
@@ -65,14 +67,15 @@ public class ContactBook {
 
     public String lookNameByPhone(int phoneNumber) throws Exception{
         for(Contact element : contacts) {
-            if (element.getPhoneNumber()==phoneNumber) {
+            if (element.getPhoneNumber().equals(phoneNumber)) {
                 return element.getName();
             }
         }
         throw new Exception("Phone number does not exist.");
     }
-    public void updatePhone(String name, int newNumber) throws Exception {
+    public void updatePhone(String name, String newNumber) throws Exception {
         Contact contact = getContactByName(name);
+        onlyDigits(newNumber);
         if (contact == null) {
             throw new Exception("Contact doesn't exist.");
         } else {
@@ -98,6 +101,17 @@ public class ContactBook {
             }
         }
         return false;
+    }
+
+
+
+    public boolean onlyDigits(String phoneNumber) throws Exception{
+        for (int i = 0; i < phoneNumber.length(); i++) {
+            if (!Character.isDigit(phoneNumber.charAt(i))) {
+                throw new Exception("Not a valid phone number.");
+            }
+        }
+        return true;
     }
 
 }
